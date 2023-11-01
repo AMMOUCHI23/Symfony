@@ -4,16 +4,16 @@
             color:red;
         }
           </style>
-<h1>Ci-dessous les données envoyées par : {{ mail }}!</h1>
+<h1>Ci-dessous les données envoyées par : {{ contact.email }}!</h1>
 <p>
 
-    Objet:  {{ objet }} 
+    Objet:  {{ contact.objet }} 
+</p>
+<p>Q
+    Email:  {{ contact.email }} 
 </p>
 <p>
-    Email:  {{ mail }} 
-</p>
-<p>
-    Message:  {{ message }} 
+    Message:  {{ contact.message }} 
 </p>
 
 {% endapply %}
