@@ -1,0 +1,19 @@
+{% apply inline_css %}
+ <style>
+  h1 {
+            color:red;
+        }
+          </style>
+<h1>Ci-dessous les données envoyées par : {{ mail }}!</h1>
+<p>
+
+    Objet:  {{ objet }} 
+</p>
+<p>
+    Email:  {{ mail }} 
+</p>
+<p>
+    Message:  {{ message }} 
+</p>
+
+{% endapply %}

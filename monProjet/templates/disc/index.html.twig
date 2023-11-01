@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Discs  {% endblock %}
+
+{% block body %}
+<div class="container"> 
+
+{% if discs.getTotalItemCount > 0  %}
+<h1>La liste des discs</h1>
+
+<div class="count">
+   <h4> Il y'a {{ discs.getTotalItemCount }} discs au total </h4>
+</div>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Numéro</th>
+      <th scope="col">titre</th>
+      <th scope="col">image</th>
+      <th scope="col">label</th>
+      <th scope="col">Numéro de l'artiste</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for disc in discs %}
+    <tr class="table-primary">
+      <th scope="row">{{ disc.id}}</th>
+      <td>{{ disc.title}}</td>
+      <td>{{ disc.picture}}</td>
+      <td>{{ disc.label}}</td>
+      <td>{{ disc.id}}</td>
+      
+    </tr>
+{% endfor %}
+   
+  
+   
+  </tbody>
+</table>
+ <div class="navigation d-flex justify-content-center">
+    {{ knp_pagination_render(discs) }}
+</div>
+{% else %}
+<h3> Il n y a aucun disc à afficher</h3>
+{% endif %}
+</div>
+{% endblock %}
