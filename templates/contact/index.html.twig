@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact{% endblock %}
+
+{% block body %}
+
+
+<div class="container col-8">
+<h1> Formulaire de contact   </h1>
+    
+    {# ajouter un message flash #}
+	{# {% for message in app.flashes('success') %}
+    <div class="alert alert-success">
+        {{ message }}
+    </div>
+{% endfor %} #}
+{{form(form)}}
+</div>
+{% endblock %}
+
+
+
+{#
+{% block body %}
+
+	<div class="row">
+
+		 {{ form_start(form, {'attr' : {'novalidate': 'novalidate'}} ) }}
+		<div class="my-custom-class-for-errors">
+			{{ form_errors(form) }}
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-8 mx-auto my-2 mt-4">
+
+			{{ form_label(form.objet) }}
+			{{ form_widget(form.objet, {'attr': {'class': 'btn-light'} }) }}
+			{{ form_errors(form.objet) }}
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-8 mx-auto my-2">
+			{{ form_row(form.email) }}
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-8 mx-auto my-2">
+			{{ form_row(form.message) }}
+		</div>
+
+	</div>
+	{{ form_end(form) }}
+{% endblock %}
+
+#}

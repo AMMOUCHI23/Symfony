@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+ {% extends 'base.html.twig' %}
 
 {% block body %}
     <div class="container">
@@ -8,16 +8,18 @@
                 <table class="table table-light table-hover">
                     <thead>
                     <tr>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>Date de naissance</th>
                         <th>Email</th>
-                         <th colspan="2">Rôles</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
+                        <td>{{ informations.lastname }}</td>
+                        <td>{{ informations.firstname }}</td>
+                        <td>{{ informations.birthdate }}</td>
                         <td>{{ informations.email }}</td>
-                         {% for role in informations.roles %}
-                          <td>{{ role }}</td>
-                        {% endfor %}
                     </tr>
                     </tbody>
                 </table>

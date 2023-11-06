@@ -1,10 +1,10 @@
 <?php
 namespace App\Controller;
 use App\Entity\Contact;
-use App\Service\MailService;
+use App\Form\DemoFormType;
 use App\Form\ContactFormType;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
+use MailService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,50 +14,30 @@ use Symfony\Component\Mailer\MailerInterface;
 
 class ContactController extends AbstractController
 {
-   
     #[Route('/contact', name: 'app_contact')]
-    #[isGranted ('ROLE_CLIENT', message: "Nous sommes désolés, vous ne disposez pas des autorisations nécessaires pour accèder à cette page!")]
-    public function index(MailService $mailservice, Request $request, EntityManagerInterface $manager): Response
+    public function index(MailerInterface $mailer, Request $request, EntityManagerInterface $entityManager): Response
     { 
-        //on restrictionne l'accès ICI :
-       // $this->denyAccessUnlessGranted('ROLE_CLIENT');
         $form = $this->createForm(ContactFormType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
             //on crée une instance de Contact
-           // $contact = new Contact();
-           $contact =$form->getData();
-          
+            $contact = new Contact();
             // Traitement des données du formulaire
-           // $data = $form->getData();
+            $data = $form->getData();
             //on stocke les données récupérées dans la variable $message
-            //$contact = $data;
+            $contact = $data;
 
-            $manager->persist($contact);
-            $manager->flush();
-           
-            //Envoie de mail avec le service créer MailService
-            $mailservice->sendMail(
-                "hello@example.com",
-                 $contact->getEmail() ,
-                  "Les contact",
-                   $contact->getMessage(),
-                   'emails/contact_email.html.twig',
-                  ['contact' => $contact]
-                
-               
-            );
-            
+            $entityManager ->persist($contact);
+            $entityManager->flush();
+
             /*
             //envoi de mail avec notre service MailService
             $email = $ms->sendMail('hello@example.com', $contact->getEmail(), $contact->getObjet(), $contact->getMessage() );
 //            dd($message->getEmail());
-           */ 
-
-           /*
-            // envoie de l'email par MailerInterface
+           */
+            // envoie de l'email
             $email = (new TemplatedEmail())
             ->from('hello@example.com')
             ->to($contact->getEmail())
@@ -74,8 +54,12 @@ class ContactController extends AbstractController
                 'message'=> $demande,
                 'data' => $data,
             ]);
-            */
-          
+            try {
+                $mailer->send($email);
+                return $this->redirectToRoute('app_accueil');
+            } catch (MailerInterface $e) {
+                echo "error d'envoi d'email";
+            }
            
         }
 
